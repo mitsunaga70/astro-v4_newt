@@ -1,0 +1,20 @@
+---
+import Container from "../../components/Container.astro";
+import PageBody from "../../components/PageBody.astro";
+import PageTitle from "../../components/PageTitle.astro";
+import Layout from "../../layouts/Layout.astro";
+import FormWithConfirmation from "./form";
+---
+
+<Layout pageRecaptcha={true}>
+  <div class="u-tac">
+    <PageTitle ja="CONTACT" />
+  </div>
+  <PageBody>
+    <Container value="xsmall">
+      <FormWithConfirmation client:only="react" />
+    </Container>
+  </PageBody>
+</Layout>
+
+<style lang="scss"></style>

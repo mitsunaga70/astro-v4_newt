@@ -1,0 +1,41 @@
+---
+import Container from "../../components/Container.astro";
+import PageBody from "../../components/PageBody.astro";
+import EventTitle from "../../components/EventTitle.astro";
+import Layout from "../../layouts/Layout.astro";
+import FormWithConfirmation from "./form";
+---
+
+<Layout pageRecaptcha={true}>
+  <div class="u-tac">
+    <EventTitle />
+  </div>
+  <PageBody>
+    <Container value="xsmall">
+      <FormWithConfirmation client:load />
+    </Container>
+  </PageBody>
+</Layout>
+
+<script>
+  import { Base64 } from "js-base64";
+  function eventsParams() {
+    const params = window.location.search;
+    const eventsParam = params.replace("?selectedEvents=", "");
+    const eventInput = document.getElementById("input-events");
+    let eventInputText = document.getElementById("input-eventsText");
+
+    if (eventsParam) {
+      const decryptedData = Base64.decode(eventsParam);
+      // eventInput.value = decryptedData;
+      // eventInputText.textContent = decryptedData;
+      const eventsText = eventInputText.textContent;
+      sessionStorage.setItem("eventsParams", decryptedData);
+      const formattedText = decryptedData.replace(/,/g, "<br>");
+      eventInputText.innerHTML = formattedText;
+    }
+  }
+
+  document.addEventListener("astro:page-load", eventsParams);
+</script>
+<style lang="scss"></style>

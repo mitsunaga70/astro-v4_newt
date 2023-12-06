@@ -1,0 +1,121 @@
+---
+import { navItems } from "../libs/nav";
+import Button from "./Button.astro";
+import Audio from "./Audio.astro";
+var data = "data-astro-reload";
+---
+
+<header class="header js-header">
+  <div class="inner">
+    <a href="/" class="logo">ヘッドレスCMS検証</a>
+    <nav class="js-gnav">
+      <ul>
+        {
+          navItems.map((item) => (
+            <li class="item">
+              {item.load ? (
+                <a href={item.link} class="link" data-astro-reload>
+                  {item.text}
+                </a>
+              ) : (
+                <a href={item.link} class="link">
+                  {item.text}
+                </a>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    <a href="/contact/" class="contact">CONTACT</a>
+  </div>
+
+  <div class="audio">
+    <Audio />
+  </div>
+</header>
+<script src="../assets/script/header.ts"></script>
+
+<script>
+  function headerScroll() {
+    var hero = document.querySelector(".js-hero");
+    var header = document.querySelector(".js-header");
+    if (!hero || !header) {
+      return; // ヒーローやヘッダーが見つからない場合は処理を中断
+    }
+    window.addEventListener("scroll", function () {
+      if (window.pageYOffset >= hero.offsetHeight) {
+        header.classList.add("is-scroll");
+      } else {
+        header.classList.remove("is-scroll");
+      }
+    });
+  }
+  document.addEventListener("DOMContentLoaded", headerScroll);
+  document.addEventListener("astro:page-load", headerScroll);
+</script>
+<style lang="scss">
+  .contact {
+    background-color: $color-text;
+    width: fit-content;
+    display: block;
+    color: white;
+    padding: 1em 2em;
+    border-radius: 30px;
+    line-height: 1;
+    position: fixed;
+    right: 30px;
+    top: 30px;
+    z-index: 10;
+  }
+  header {
+    // padding: 30px 30px;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    width: 100%;
+  }
+  .logo {
+    font-size: 2.4rem;
+    display: block;
+    position: fixed;
+    left: 30px;
+    top: 30px;
+    z-index: 10;
+  }
+  .inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 40px;
+    z-index: 10;
+  }
+  ul {
+    display: flex;
+    justify-content: flex-end;
+    gap: 30px;
+    font-size: 1.8rem;
+  }
+
+  :global(.pageTop) {
+    .js-header {
+      color: #fff;
+
+      &.is-scroll {
+        color: $color-text;
+      }
+    }
+  }
+  .audio {
+    position: fixed;
+    right: 200px;
+    top: 38px;
+    z-index: 10;
+  }
+</style>

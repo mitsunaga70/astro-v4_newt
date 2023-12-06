@@ -1,0 +1,32 @@
+---
+import { newtClient } from "../libs/newt";
+import type { Article } from "../libs/newt";
+import NewsItem from "./NewsItem.astro";
+
+export interface Props {
+  categories?: string;
+  classNames?: string;
+  limit?: number;
+}
+const { categories, limit, classNames } = Astro.props;
+const cateId = categories && categories;
+
+const { items: news } = await newtClient.getContents<Article>({
+  appUid: "news",
+  modelUid: "article",
+  query: {
+    select: ["_id", "_sys", "title", "slug", "body", "categories"],
+    order: ["-_priority", "-_sys.customOrder"],
+    categories: cateId,
+    limit: limit,
+  },
+});
+---
+
+<ul class="list">
+  {
+    news.map((newsItem) => {
+      return <NewsItem newsItem={newsItem} />;
+    })
+  }
+</ul>

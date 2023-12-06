@@ -1,0 +1,24 @@
+---
+import Footer from "./Footer.astro";
+import Header from "./Header.astro";
+import { fade } from "astro:transitions";
+---
+
+<div class="wrapper">
+  <Header />
+  <main class="main">
+    <slot />
+  </main>
+  <Footer />
+</div>
+
+<script>
+  import "../assets/script/fade";
+  import "../assets/script/resizereload";
+</script>
+
+<style lang="scss">
+  main {
+    padding: 140px 0 100px;
+  }
+</style>
