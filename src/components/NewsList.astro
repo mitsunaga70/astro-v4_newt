@@ -25,7 +25,7 @@ const { items: news } = await newtClient.getContents<Article>({
 
 <ul class="list">
   {
-    news.map((newsItem) => {
+    news.map((newsItem: any) => {
       return <NewsItem newsItem={newsItem} />;
     })
   }

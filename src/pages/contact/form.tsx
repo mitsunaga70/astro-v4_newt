@@ -7,21 +7,20 @@ const FormWithConfirmation = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState(''); // メールアドレス用のステートを追加
   const [message, setMessage] = useState('');
-  const [recaptchaToken, setRecaptchaToken] = useState('');
+  // const [recaptchaToken, setRecaptchaToken] = useState('');
 
   const [showConfirmation, setShowConfirmation] = useState(false);
 
 
 
   // フォームの送信をハンドル
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: any) => {
     event.preventDefault(); // ページ遷移を防ぐ
 
-    const tokenValue = sessionStorage.getItem('recaptchaToken');
-    setRecaptchaToken(tokenValue);
-
-    // const tokenValue = document.getElementById('recaptchaToken').value;
+    // const tokenValue = sessionStorage.getItem('recaptchaToken');
     // setRecaptchaToken(tokenValue);
+
+
 
 
     setShowConfirmation(true); // 確認画面を表示
@@ -61,12 +60,12 @@ const FormWithConfirmation = () => {
     form.appendChild(messageField);
 
 
-    const recaptchaField = document.createElement('input');
-    recaptchaField.type = 'hidden';
-    recaptchaField.name = 'googleReCaptchaToken';
-    recaptchaField.id = 'recaptchaToken';
-    recaptchaField.value = recaptchaToken;
-    form.appendChild(recaptchaField);
+    // const recaptchaField = document.createElement('input');
+    // recaptchaField.type = 'hidden';
+    // recaptchaField.name = 'googleReCaptchaToken';
+    // recaptchaField.id = 'recaptchaToken';
+    // recaptchaField.value = recaptchaToken;
+    // form.appendChild(recaptchaField);
 
 
 
@@ -114,7 +113,7 @@ const FormWithConfirmation = () => {
               <div className="form-item-body"><textarea id="message" value={message} required name="message" onChange={(e) => setMessage(e.target.value)}></textarea></div>
             </li>
           </ul>
-          <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" />
+          {/* <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" /> */}
           <button type="submit">確認画面へ</button>
         </form>
 

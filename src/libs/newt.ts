@@ -22,6 +22,10 @@ export interface Article {
   categories: {
     slug: string;
   }[];
+  tags: {
+    slug: string;
+  }[];
+  top: boolean;
 }
 
 export const newtClient = createClient({

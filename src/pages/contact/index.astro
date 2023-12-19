@@ -6,13 +6,13 @@ import Layout from "../../layouts/Layout.astro";
 import FormWithConfirmation from "./form";
 ---
 
-<Layout pageRecaptcha={true}>
+<Layout>
   <div class="u-tac">
     <PageTitle ja="CONTACT" />
   </div>
   <PageBody>
     <Container value="xsmall">
-      <FormWithConfirmation client:only="react" />
+      <FormWithConfirmation client:load />
     </Container>
   </PageBody>
 </Layout>

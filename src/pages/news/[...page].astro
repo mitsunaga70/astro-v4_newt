@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import PageBody from "../../components/PageBody.astro";
 import PageTitle from "../../components/PageTitle.astro";
 import NewsPageList from "../../components/NewsPageList.astro";
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: any) {
   const postsData = await newtClient.getContents({
     appUid: "news",
     modelUid: "article",

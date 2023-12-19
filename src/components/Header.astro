@@ -34,20 +34,19 @@ var data = "data-astro-reload";
     <Audio />
   </div>
 </header>
-<script src="../assets/script/header.ts"></script>
 
 <script>
   function headerScroll() {
-    var hero = document.querySelector(".js-hero");
-    var header = document.querySelector(".js-header");
+    var hero = document.querySelector(".js-hero") as HTMLElement;
+    var header = document.querySelector(".js-header") as HTMLElement;
     if (!hero || !header) {
       return; // ヒーローやヘッダーが見つからない場合は処理を中断
     }
     window.addEventListener("scroll", function () {
-      if (window.pageYOffset >= hero.offsetHeight) {
-        header.classList.add("is-scroll");
+      if (window.scrollY >= hero?.offsetHeight) {
+        header?.classList.add("is-scroll");
       } else {
-        header.classList.remove("is-scroll");
+        header?.classList.remove("is-scroll");
       }
     });
   }

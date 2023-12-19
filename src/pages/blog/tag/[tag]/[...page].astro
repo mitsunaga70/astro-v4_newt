@@ -6,7 +6,7 @@ import PageBody from "../../../../components/PageBody.astro";
 import PageTitle from "../../../../components/PageTitle.astro";
 import BlogPageList from "../../../../components/BlogPageList.astro";
 
-export async function getStaticPaths({ paginate }) {
+export async function getStaticPaths({ paginate }: any) {
   const { items: tags } = await newtClient.getContents<Tag>({
     appUid: "blog",
     modelUid: "tag",

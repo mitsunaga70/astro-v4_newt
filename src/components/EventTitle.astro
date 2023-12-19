@@ -49,13 +49,13 @@ const pageTitleClass = reversal ? "pageTitle js-pageTitle reversal" : "pageTitle
   function pageBefore() {
     // 1文字ずつ
     (function () {
-      const wrapCharSpan = function (str) {
+      const wrapCharSpan = function (str: string) {
         return [...str].map((char) => `<span class='js-word__cell'>${char}</span>`).join("");
       };
       //対象の要素を取得する
       const targets = document.querySelectorAll(".js-word__item");
       targets.forEach((target) => {
-        target.innerHTML = wrapCharSpan(target.textContent);
+        target.innerHTML = wrapCharSpan(target.textContent ?? "");
       });
     })();
 

@@ -54,7 +54,7 @@
 <script>
   //オーディオコントロール
   function loadAudio() {
-    const bgm1 = document.querySelector("#js-bgm01"); // <audio>
+    const bgm1 = document.querySelector("#js-bgm01") as HTMLMediaElement; // <audio>
     const btn = document.querySelector("#js-btnPlay"); // <button>
     if (btn && bgm1) {
       if (bgm1.paused) {
@@ -67,7 +67,7 @@
     }
   }
   var soundControl = function soundControl() {
-    const bgm1 = document.querySelector("#js-bgm01"); // <audio>
+    const bgm1 = document.querySelector("#js-bgm01") as HTMLMediaElement; // <audio>
     const btn = document.querySelector("#js-btnPlay"); // <button>
 
     if (btn && bgm1) {

@@ -1,7 +1,22 @@
 ---
 import { Image } from "astro:assets";
+export interface TagType {
+  name: string;
+  // Add other properties for tag if available
+}
+
+export interface BlogItemType {
+  _id: string;
+  coverImage: {
+    src: string;
+  };
+  tags: TagType[];
+  title: string;
+  // Define the rest of the properties for blogItem
+}
+
 export interface Props {
-  blogItem: any;
+  blogItem: BlogItemType;
 }
 const { blogItem } = Astro.props;
 ---

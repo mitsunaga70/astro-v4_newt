@@ -137,33 +137,40 @@ const { items: events } = await newtClient.getContents<Article>({
     function blowserBack() {
       // ブラウザバック時
       window.addEventListener("pageshow", () => {
-        if (performance.getEntriesByType("navigation")[0].type === "back_forward") {
-          const $checkedInput = $(".js-tourEventInput:checked");
-          const $checkedNum = $checkedInput.length;
-          $(".js-tourEventCount").text($checkedNum);
+        const navigationEntries = performance.getEntriesByType("navigation");
+        if (
+          navigationEntries.length > 0 &&
+          navigationEntries[0] instanceof PerformanceNavigationTiming
+        ) {
+          const navigationEntry = navigationEntries[0] as PerformanceNavigationTiming;
+          if (navigationEntry.type === "back_forward") {
+            const $checkedInput = $(".js-tourEventInput:checked");
+            const $checkedNum = $checkedInput.length;
+            $(".js-tourEventCount").text($checkedNum);
 
-          const $checked = $(".js-tourEventInput:checked");
-          const selectedValues = $checked
-            .map(function () {
-              const selectedValue = $(this).attr("value");
-              return selectedValue;
-            })
-            .get();
-          if (selectedValues.length === 0) {
-            const reservationLink = $(".bar a");
-            reservationLink.attr("href", `/404`);
-          } else {
-            const selectedValuesString = selectedValues.join(",");
+            const $checked = $(".js-tourEventInput:checked");
+            const selectedValues = $checked
+              .map(function () {
+                const selectedValue = $(this).attr("value");
+                return selectedValue;
+              })
+              .get();
+            if (selectedValues.length === 0) {
+              const reservationLink = $(".bar a");
+              reservationLink.attr("href", `/404`);
+            } else {
+              const selectedValuesString = selectedValues.join(",");
 
-            (function () {
-              var aaa = Base64.encode(selectedValuesString);
+              (function () {
+                var aaa = Base64.encode(selectedValuesString);
 
-              var bbb = Base64.decode(aaa);
-            })();
-            const encryptedValuesString = Base64.encode(selectedValuesString);
+                var bbb = Base64.decode(aaa);
+              })();
+              const encryptedValuesString = Base64.encode(selectedValuesString);
 
-            const reservationLink = $(".bar a");
-            reservationLink.attr("href", `/events/form/?selectedEvents=${encryptedValuesString}`);
+              const reservationLink = $(".bar a");
+              reservationLink.attr("href", `/events/form/?selectedEvents=${encryptedValuesString}`);
+            }
           }
         }
       });

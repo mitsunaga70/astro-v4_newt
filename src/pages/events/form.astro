@@ -6,13 +6,13 @@ import Layout from "../../layouts/Layout.astro";
 import FormWithConfirmation from "./form";
 ---
 
-<Layout pageRecaptcha={true}>
+<Layout>
   <div class="u-tac">
     <EventTitle />
   </div>
   <PageBody>
     <Container value="xsmall">
-      <FormWithConfirmation client:load />
+      <FormWithConfirmation client:load transition:persist />
     </Container>
   </PageBody>
 </Layout>
@@ -38,6 +38,7 @@ import FormWithConfirmation from "./form";
     }
   }
 
+  document.addEventListener("DOMContentLoaded", eventsParams);
   document.addEventListener("astro:page-load", eventsParams);
 </script>
 <style lang="scss"></style>

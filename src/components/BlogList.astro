@@ -1,7 +1,7 @@
 ---
 import { newtClient } from "../libs/newt";
 import type { Article } from "../libs/newt";
-import BlogItem from "./BlogItem.astro";
+import BlogItem, { type BlogItemType } from "./BlogItem.astro";
 
 export interface Props {
   tags?: string;
@@ -27,7 +27,7 @@ const { items: blog } = await newtClient.getContents<Article>({
 
 <ul class="list">
   {
-    blog.map((blogItem) => {
+    blog.map((blogItem: any) => {
       return <BlogItem blogItem={blogItem} />;
     })
   }

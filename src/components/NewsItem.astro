@@ -1,8 +1,20 @@
 ---
 import FormatDate from "./formatDate.astro";
 
+export interface NewsItemType {
+  _id: string;
+  _sys: {
+    raw: {
+      createdAt: string;
+    };
+  };
+  categories: { name: string }[];
+  title: string;
+  // Define the rest of the properties for newsItem
+}
+
 export interface Props {
-  newsItem: any;
+  newsItem: NewsItemType;
 }
 const { newsItem } = Astro.props;
 ---

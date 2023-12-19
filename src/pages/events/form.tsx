@@ -17,10 +17,10 @@ const FormWithConfirmation = () => {
 
 
   // フォームの送信をハンドル
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault(); // ページ遷移を防ぐ
 
-    const eventsParams = sessionStorage.getItem('eventsParams');
+    const eventsParams = sessionStorage.getItem('eventsParams') || '';
     setEvents(eventsParams);
 
 
@@ -28,7 +28,7 @@ const FormWithConfirmation = () => {
     const formattedText = eventsParams.replace(/,/g, "<br>");
     setEventsText(formattedText);
 
-    const tokenValue = sessionStorage.getItem('recaptchaToken');
+    const tokenValue = sessionStorage.getItem('recaptchaToken') || '';
     setRecaptchaToken(tokenValue);
 
     // const tokenValue = document.getElementById('recaptchaToken').value;
@@ -111,7 +111,7 @@ const FormWithConfirmation = () => {
 
           <ul>
             <li className="js-contactEventItem">
-              <label className="form-item-title" for="input-events">Event</label>
+              <label className="form-item-title" htmlFor="input-events">Event</label>
               <div className="form-item-body">
                 <input id="input-events" name="events" value={events} hidden />
                 <p id="input-eventsText" className="u-mt8" dangerouslySetInnerHTML={{ __html: eventsText }}></p>
@@ -120,11 +120,11 @@ const FormWithConfirmation = () => {
 
             </li>
             <li>
-              <label className="form-item-title" for="name">Name</label>
+              <label className="form-item-title" htmlFor="name">Name</label>
               <div className="form-item-body"><input id="name" required name="name" value={name} onChange={(e) => setName(e.target.value)} /></div>
             </li>
             <li>
-              <label className="form-item-title" for="email">Email</label>
+              <label className="form-item-title" htmlFor="email">Email</label>
               <div className="form-item-body">
                 <input
                   id="email"
@@ -137,12 +137,12 @@ const FormWithConfirmation = () => {
               </div>
             </li>
             <li>
-              <label className="form-item-title" for="message">Message</label>
+              <label className="form-item-title" htmlFor="message">Message</label>
               <div className="form-item-body"><textarea id="message" value={message} required name="message" onChange={(e) => setMessage(e.target.value)}></textarea></div>
             </li>
           </ul>
           <input type="hidden" id="recaptchaToken" name="googleReCaptchaToken" />
-          <button type="submit">確認画面へ</button>
+          <button type="submit" >確認画面へ</button>
         </form>
 
       ) : (
@@ -152,7 +152,7 @@ const FormWithConfirmation = () => {
 
           <ul>
             <li>
-              <p className="form-item-title">Name</p>
+              <p className="form-item-title">Event</p>
               <p className="form-item-body" dangerouslySetInnerHTML={{ __html: eventsText }}></p>
             </li>
             <li>

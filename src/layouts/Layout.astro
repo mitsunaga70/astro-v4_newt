@@ -2,57 +2,28 @@
 import "../assets/styles/globals.scss";
 import Meta from "../components/Meta.astro";
 import Loading from "../components/Loading.astro";
-import { ViewTransitions } from "astro:transitions";
+// import { ViewTransitions } from "astro:transitions";
 import Wrapper from "../components/Wrapper.astro";
 export interface Props {
   pageTitle?: string;
   pageDesc?: string;
   pageNoindex?: boolean;
   pageClass?: string;
-  pageRecaptcha?: boolean;
 }
 
-const { pageTitle, pageDesc, pageNoindex, pageClass = "", pageRecaptcha = false } = Astro.props;
+const { pageTitle, pageDesc, pageNoindex, pageClass = "" } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="ja">
   <head>
     <Meta pageTitle={pageTitle} pageDesc={pageDesc} pageNoindex={pageNoindex} />
-    <ViewTransitions />
-    
+    <!-- <ViewTransitions /> -->
   </head>
   <body class={pageClass}>
     <Loading />
     <Wrapper>
       <slot />
     </Wrapper>
-
-
-    {
-      pageRecaptcha && (
-        <script
-          is:inline
-          src="https://www.google.com/recaptcha/api.js?render=6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk"
-        />
-        <script>
-          function recaptchaToken() {
-          grecaptcha.ready(function () {
-            grecaptcha
-              .execute("6LcH1nwoAAAAAGkyaXcuCwJJQpgHm00M6PwwHwwk", { action: "homepage" })
-              .then(function (token) {
-                sessionStorage.setItem("recaptchaToken", token);
-                document.getElementById("recaptchaToken").value = token;
-              });
-          });
-        }
-        recaptchaToken
-        document.addEventListener("DOMContentLoaded", recaptchaToken);
-  
-        document.addEventListener("astro:page-load", recaptchaToken);
-      </script>
-      )
-    }
-    
   </body>
 </html>
