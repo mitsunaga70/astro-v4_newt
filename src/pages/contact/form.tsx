@@ -141,7 +141,7 @@ const FormWithConfirmation = () => {
 
           <div className="button-wrap">
             <button onClick={handleBack}>戻る</button> {/* 戻るボタンを追加 */}
-            <button onClick={handleConfirm}>送信</button>
+            <button type="submit" onClick={handleConfirm}>送信</button>
           </div>
 
         </div>
