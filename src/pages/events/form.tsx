@@ -107,7 +107,7 @@ const FormWithConfirmation = () => {
       {!showConfirmation ? (
 
         // フォーム入力画面
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} id='form'>
 
           <ul>
             <li className="js-contactEventItem">
