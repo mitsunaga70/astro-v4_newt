@@ -29,10 +29,12 @@ import FormWithConfirmation from "./form";
       const decryptedData = Base64.decode(eventsParam);
       // eventInput.value = decryptedData;
       // eventInputText.textContent = decryptedData;
-      const eventsText = eventInputText.textContent;
+      const eventsText = eventInputText?.textContent;
       sessionStorage.setItem("eventsParams", decryptedData);
-      const formattedText = decryptedData.replace(/,/g, "<br>");
-      eventInputText.innerHTML = formattedText;
+      if (eventInputText) {
+        const formattedText = decryptedData.replace(/,/g, "<br>");
+        eventInputText.innerHTML = formattedText;
+      }
     }
   }
 

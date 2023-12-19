@@ -103,6 +103,7 @@ const FormWithConfirmation = () => {
 
   return (
     <div className="c-form">
+
       {!showConfirmation ? (
 
         // フォーム入力画面

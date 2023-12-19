@@ -247,7 +247,7 @@
     font-weight: $weight-b;
     letter-spacing: 0em;
     line-height: 1.6;
-    @include max(fz, 16);
+    font-size: 1.6rem;
     @if $siz== "" and $siz == main {
       line-height: 1.6;
     } @else if $siz == main_bold {

@@ -1,0 +1,14 @@
+---
+import PageBody from "../../components/PageBody.astro";
+import Layout from "../../layouts/Layout.astro";
+import Title from "./Title";
+let title = "Fuga";
+---
+
+<Layout pageClass="pageTop">
+  <PageBody>
+    <h1>Welcome to <span class="text-gradient">{title}</span></h1>
+    <Title>タイトル</Title>
+    <p class="instructions"></p>
+  </PageBody>
+</Layout>

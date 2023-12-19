@@ -8,7 +8,9 @@ export interface Tag {
 }
 export interface Article {
   _id: string;
-  _sys: string;
+  _sys: {
+    customOrder: number;
+  };
   title: string;
   slug: string;
   body: string;
@@ -17,6 +19,9 @@ export interface Article {
     width: number;
     height: number;
   };
+  categories: {
+    slug: string;
+  }[];
 }
 
 export const newtClient = createClient({
