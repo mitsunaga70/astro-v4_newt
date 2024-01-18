@@ -1,4 +1,5 @@
 ---
+export const prerender = false;
 import Layout from "../../layouts/Layout.astro";
 import { newtClient } from "../../libs/newt";
 import type { Article } from "../../libs/newt";
@@ -22,45 +23,57 @@ export const getStaticPaths = async () => {
 
 const { article } = Astro.props;
 
-const blogPrev = await newtClient.getFirstContent<Article>({
-  appUid: "blog",
-  modelUid: "article",
-  query: {
-    select: ["_id", "title"],
-    order: ["-_sys.customOrder"],
-    "_sys.customOrder": {
-      lt: article._sys.customOrder,
-    },
-  },
-});
-const blogNext = await newtClient.getFirstContent<Article>({
-  appUid: "blog",
-  modelUid: "article",
-  query: {
-    select: ["_id", "title"],
-    order: ["_sys.customOrder"],
-    "_sys.customOrder": {
-      gt: article._sys.customOrder,
-    },
-  },
-});
+// 安全なアクセスのためのチェックを追加
+const customOrder = article?._sys?.customOrder;
+
+const blogPrev = customOrder
+  ? await newtClient.getFirstContent<Article>({
+      appUid: "blog",
+      modelUid: "article",
+      query: {
+        select: ["_id", "title"],
+        order: ["-_sys.customOrder"],
+        "_sys.customOrder": {
+          lt: customOrder,
+        },
+      },
+    })
+  : null;
+
+const blogNext = customOrder
+  ? await newtClient.getFirstContent<Article>({
+      appUid: "blog",
+      modelUid: "article",
+      query: {
+        select: ["_id", "title"],
+        order: ["_sys.customOrder"],
+        "_sys.customOrder": {
+          gt: customOrder,
+        },
+      },
+    })
+  : null;
 ---
 
 <Layout>
   <PageBody>
     <Container value="small">
       <div class="blog-single">
-        <h1>{article.title}</h1>
+        <h1>{article?.title}</h1>
         <figure class="cover">
-          <Image
-            src={article.coverImage.src}
-            width={780}
-            height={520}
-            alt={article.title}
-            loading="eager"
-          />
+          {
+            article?.coverImage && (
+              <Image
+                src={article?.coverImage.src}
+                alt={article?.title}
+                width={780}
+                height={520}
+                loading="eager"
+              />
+            )
+          }
         </figure>
-        <article set:html={article.body} />
+        <article set:html={article?.body} />
         <div class="article-footer">
           {
             blogPrev && (
