@@ -2,7 +2,9 @@ import { defineConfig } from 'astro/config';
 import postcssMergeQueries from "postcss-merge-queries";
 import sitemap from "@astrojs/sitemap";
 import preact from "@astrojs/preact";
+import netlify from "@astrojs/netlify";
 const siteUrl = import.meta.env.PUBLIC_SITE_URL;
+
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,8 +26,10 @@ export default defineConfig({
   server: {
     open: true
   },
-  image: {
-    domains: ["blog-739442.assets.newt.so"]
-  },
-  site: siteUrl
+  // image: {
+  //   domains: ["blog-739442.assets.newt.so"]
+  // },
+  site: siteUrl,
+  output: "server",
+  adapter: netlify()
 });
