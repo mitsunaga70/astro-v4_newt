@@ -30,8 +30,8 @@ export default defineConfig({
   //   domains: ["blog-739442.assets.newt.so"]
   // },
   site: siteUrl,
-  output: "hybrid",
-  adapter: netlify({
-    edgeMiddleware: true
-  }),
+  // output: "hybrid",
+  // adapter: netlify({
+  //   edgeMiddleware: true
+  // }),
 });
