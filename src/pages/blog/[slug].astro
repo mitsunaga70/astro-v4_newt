@@ -1,0 +1,154 @@
+---
+import Button from "../../components/Button.astro";
+import Container from "../../components/Container.astro";
+import PageBody from "../../components/PageBody.astro";
+import Layout from "../../layouts/Layout.astro";
+import { newtClient, type Article } from "../../libs/newt";
+import { Image } from "astro:assets";
+
+export const prerender = false;
+const { items: pages } = await newtClient.getContents<Article>({
+  appUid: "blog",
+  modelUid: "article",
+  query: {
+    select: ["_id", "title", "_sys", "slug", "body", "coverImage"],
+    order: ["-_priority", "-_sys.customOrder"],
+  },
+});
+
+const { slug } = Astro.params;
+const page = pages.find((page) => page._id === slug);
+if (!page) return Astro.redirect("/404");
+const { title, body, coverImage, _sys } = page;
+
+// 安全なアクセスのためのチェックを追加
+const customOrder = _sys?.customOrder;
+
+const blogPrev = customOrder
+  ? await newtClient.getFirstContent<Article>({
+      appUid: "blog",
+      modelUid: "article",
+      query: {
+        select: ["_id", "title"],
+        order: ["-_sys.customOrder"],
+        "_sys.customOrder": {
+          lt: customOrder,
+        },
+      },
+    })
+  : null;
+
+const blogNext = customOrder
+  ? await newtClient.getFirstContent<Article>({
+      appUid: "blog",
+      modelUid: "article",
+      query: {
+        select: ["_id", "title"],
+        order: ["_sys.customOrder"],
+        "_sys.customOrder": {
+          gt: customOrder,
+        },
+      },
+    })
+  : null;
+---
+
+<Layout>
+  <PageBody>
+    <Container value="small">
+      <div class="blog-single">
+        <h1>{title}</h1>
+        <figure class="cover">
+          {
+            coverImage && (
+              <Image src={coverImage.src} alt={title} width={780} height={520} loading="eager" />
+            )
+          }
+        </figure>
+        <article set:html={body} />
+        <div class="article-footer">
+          {
+            blogPrev && (
+              <a href={"/blog/" + blogPrev._id} class="prev">
+                前の記事へ
+              </a>
+            )
+          }
+          <Button text="一覧に戻る" link="/blog/" />
+
+          {
+            blogNext && (
+              <a href={"/blog/" + blogNext._id} class="next">
+                次の記事へ
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </Container>
+  </PageBody>
+</Layout>
+
+<style lang="scss">
+  h1 {
+    font-size: 3.8rem;
+    margin-bottom: 60px;
+  }
+  .cover {
+    width: 100%;
+    margin-inline: auto;
+    margin-bottom: 60px;
+    max-width: 780px;
+    img {
+      display: block;
+      width: 100%;
+    }
+  }
+  .blog-single {
+    :global(p) {
+      &:not(:last-child) {
+        margin-bottom: 1em;
+      }
+    }
+  }
+  .article-footer {
+    display: flex;
+    align-items: center;
+    margin-top: 60px;
+    position: relative;
+    :global(.button) {
+      margin-top: 0;
+    }
+
+    .prev,
+    .next {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      @include pCenter(y);
+      @include bp(pc) {
+        transition: 0.3s;
+        &:hover {
+          color: $color-red;
+        }
+      }
+      &::before,
+      &::after {
+        display: block;
+        margin-top: -5px;
+      }
+    }
+    .next {
+      right: 0;
+      &::after {
+        content: ">";
+      }
+    }
+    .prev {
+      left: 0;
+      &::before {
+        content: "<";
+      }
+    }
+  }
+</style>
