@@ -16,8 +16,8 @@ const { items: pages } = await newtClient.getContents<Article>({
   },
 });
 
-const { slug } = Astro.params;
-const page = pages.find((page) => page._id === slug);
+const { id } = Astro.params;
+const page = pages.find((page) => page._id === id);
 if (!page) return Astro.redirect("/404");
 const { title, body, coverImage, _sys } = page;
 

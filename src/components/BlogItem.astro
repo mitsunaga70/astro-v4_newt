@@ -24,14 +24,14 @@ const { blogItem } = Astro.props;
 <li>
   <a href={`/blog/${blogItem._id}`}>
     <figure>
-      <Image
+      <img
         src={blogItem.coverImage.src}
         width={338 * 2}
         height={225 * 2}
         alt={blogItem.title}
         class="u-pc"
       />
-      <Image
+      <img
         src={blogItem.coverImage.src}
         width={375}
         height={228}

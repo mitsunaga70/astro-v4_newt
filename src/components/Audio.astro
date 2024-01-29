@@ -118,10 +118,9 @@
       // }
     }
   };
-  loadAudio();
-  soundControl();
 
-  document.addEventListener("astro:after-swap", loadAudio);
+  // document.addEventListener("astro:after-swap", loadAudio);
+  document.addEventListener("DOMContentLoaded", loadAudio);
   document.addEventListener("DOMContentLoaded", soundControl);
-  document.addEventListener("astro:page-load", soundControl);
+  // document.addEventListener("astro:page-load", soundControl);
 </script>
